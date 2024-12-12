@@ -1,0 +1,8 @@
+h1 Create new book
+
+= form_with model: @book, local: false, id: 'new_book', class: 'form-group' do |form|
+  = form.label :title, class: 'form-label'
+  = form.text_field :title, placeholder: "Please enter title of new book ...", class: "form-control"
+  = form.label :content, class: 'form-label'
+  = form.text_area :content, placeholder: "Please enter content of new book...", class: "form-control"
+  = form.submit "Submit", class: "btn btn-success"

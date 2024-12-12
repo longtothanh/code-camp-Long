@@ -1,0 +1,17 @@
+h1 Users List
+
+table.table.table-striped
+  thead
+    tr
+      th ID
+      th Email
+      th Actions
+  tbody
+    - @users.each do |user|
+      tr
+        td = user.id
+        td = user.email
+        td
+            = link_to 'View', user_path(user), class: 'btn btn-primary'
+            = link_to 'Edit', edit_user_registration_path(user), class: 'btn btn-warning'
+            = link_to 'Delete', destroy_user_session_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'

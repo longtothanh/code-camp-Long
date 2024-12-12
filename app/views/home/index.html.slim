@@ -15,9 +15,11 @@
             tr
               th Title
               th Content
+              th 
+              th 
           tbody.js-list-book-content
             = render partial: 'list_book_content', collection: @books, as: :book
-
+        = link_to 'New Book', new_book_path, class: 'btn btn-primary'
       - else
         p.text-center No products found.
 javascript:

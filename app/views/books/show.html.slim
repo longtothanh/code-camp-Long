@@ -9,5 +9,5 @@ h2 Reviews
 h3 Write a Review
 
 = form_with model: [@book, Review.new], local: false, id: 'new_review' do |form|
-  = form.text_area :content, placeholder: "Write your review here"
-  = form.submit "Submit"
+  = form.text_area :content, placeholder: "Write your review here", class: "form-control"
+  = form.submit "Submit", class: "btn btn-primary"
