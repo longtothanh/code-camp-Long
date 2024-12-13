@@ -7,9 +7,9 @@ class BooksController < ApplicationController
   def destroy
     @book = Book.find(params[:id])
     if @book.destroy
-      redirect_to root_path, alert: 'Book deleted successfully'
+      redirect_to root_path, notice: 'Book deleted successfully'
     else
-      redirect_to root_path, alert: 'Book not found'
+      redirect_to root_path, notice: 'Book not found'
     end
   end
 
@@ -20,7 +20,7 @@ class BooksController < ApplicationController
   def create
     @book = Book.new(book_params)
     @book.save
-    redirect_to root_path
+    redirect_to root_path, alert: 'Create book successfully'
   end
 
   private

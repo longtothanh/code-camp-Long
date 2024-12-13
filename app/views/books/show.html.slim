@@ -1,13 +1,16 @@
-h1= @book.title
-p= @book.content
+.container
+  .row.d-flex.justify-content-center
+    .col-md-8
+      h1.text-center= @book.title
+      p= @book.content
 
-h2 Reviews
+      h2 Reviews
 
-#reviews data-book-id=@book.id
-  = render @book.reviews
+      #reviews data-book-id=@book.id
+        = render @book.reviews
 
-h3 Write a Review
+      h3 Write a Review
 
-= form_with model: [@book, Review.new], local: false, id: 'new_review' do |form|
-  = form.text_area :content, placeholder: "Write your review here", class: "form-control"
-  = form.submit "Submit", class: "btn btn-primary"
+      = form_with model: [@book, Review.new], local: false, id: 'new_review' do |form|
+        = form.text_area :content, placeholder: "Write your review here", class: "form-control"
+        = form.submit "Submit", class: "btn btn-primary mt-3"

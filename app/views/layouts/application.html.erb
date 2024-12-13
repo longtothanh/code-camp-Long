@@ -21,11 +21,16 @@
   </head>
   <body>
     <%= render "layouts/header" %>
-    <div class="container-fluid">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-    </div>
-    <div class="container">
+    <div class="container mt-3">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-5">
+          <% if alert.present? %>
+            <p class="alert text-center alert-success"><strong><%= alert %></strong></p>
+          <% elsif notice.present? %>
+            <p class="alert text-center alert-success"><strong><%= notice %></strong></p>
+          <% end %>
+        </div>
+      </div>
       <%= yield %>
     </div>
   </body>
