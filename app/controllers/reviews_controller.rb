@@ -5,6 +5,14 @@ class ReviewsController < ApplicationController
 
     if @review.save
       ActionCable.server.broadcast("book_#{@book.id}_reviews", {review: render_review(@review)})
+      # current_user.followers.each do |follower|
+      #   Notification.create(
+      #     user: follower,
+      #     notifiable: @book,
+      #     action_type: "new_book"
+      #   )
+      # end
+      # binding.pry
     else
       render json: { error: "Unable to save review" }, status: :unprocessable_entity
     end

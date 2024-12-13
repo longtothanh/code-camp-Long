@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :reverse_follows, class_name: 'Follow', foreign_key: 'followed_id'
   has_many :followers, through: :reverse_follows, source: :user
 
+  has_many :notifications
+
   def follow(other_user)
     follows.create(followed_id: other_user.id)
   end
@@ -19,5 +21,13 @@ class User < ApplicationRecord
 
   def following?(other_user)
     followed_users.include?(other_user)
+  end
+
+  def create_notification(action_type, other_user)
+    Notification.create(
+      user: other_user,
+      notifiable: self,
+      action_type: action_type
+    )
   end
 end
