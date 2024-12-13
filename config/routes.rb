@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     resources :reviews, only: [:create, :show]
   end
 
-  resources :users, only: [:index, :show] do
+  resources :users, only: [:index, :show, :destroy] do
     resource :follow, only: [:create, :destroy]
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

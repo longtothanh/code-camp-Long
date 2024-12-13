@@ -5,25 +5,19 @@ table.table.table-striped
     tr
       th ID
       th Email
-      th Actions
+      th 
+      th
       th
   tbody
     - @users.each do |user|
       tr
         td = user.id
-        td = user.email
+        td = link_to "#{user.email}", user_path(user)
         td
-          = link_to 'View', user_path(user), class: 'btn btn-primary'
           = link_to 'Edit', edit_user_registration_path(user), class: 'btn btn-warning'
-          = link_to 'Delete', destroy_user_session_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+        td 
+          = button_to 'Delete', user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-md'
         - if current_user.following?(user)
           td = button_to 'Unfollow', user_follow_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
         - else
           td = button_to 'Follow', user_follow_path(user), method: :post, data: { confirm: 'Are you sure?' }, class: "btn btn-success"
-
-- current_user.notifications.each do |notification|
-  .notification
-    p =notification.user.email
-      | has =notification.action_type
-      | you.
-    
