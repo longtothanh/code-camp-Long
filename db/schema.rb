@@ -23,16 +23,19 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_13_023739) do
     t.integer "followed_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["followed_id"], name: "index_follows_on_followed_id"
+    t.index ["user_id", "followed_id"], name: "index_follows_on_user_id_and_followed_id", unique: true
     t.index ["user_id"], name: "index_follows_on_user_id"
   end
 
   create_table "notifications", force: :cascade do |t|
     t.integer "user_id", null: false
+    t.string "notifiable_type", null: false
     t.integer "notifiable_id", null: false
     t.string "action_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["notifiable_id"], name: "index_notifications_on_notifiable_id"
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
@@ -57,7 +60,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_13_023739) do
   end
 
   add_foreign_key "follows", "users"
-  add_foreign_key "notifications", "notifiables"
   add_foreign_key "notifications", "users"
   add_foreign_key "reviews", "books"
 end

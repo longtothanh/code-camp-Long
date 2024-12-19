@@ -8,6 +8,25 @@
         <p>Welcome, <%= current_user.email %>!</p>
         <%= link_to 'All users', users_path, class: "btn btn-info" %>
         <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'logout-button', data: { confirm: 'Are you sure you want to log out?' }, class: "btn btn-danger" %>
+
+        <div class="dropdown">
+        <button class="btn btn-light position-relative" type="button" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-bell">&#128276;</i>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            3
+            <span class="visually-hidden">unread notifications</span>
+          </span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+          <li><a class="dropdown-item" href="#">Thông báo 1</a></li>
+          <li><a class="dropdown-item" href="#">Thông báo 2</a></li>
+          <li><a class="dropdown-item" href="#">Thông báo 3</a></li>
+          <li><a class="dropdown-item" href="#">Thông báo 4</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">Xem tất cả</a></li>
+        </ul>
+      </div>
+
       <% else %>
         <%= button_to 'Login', new_user_session_path, class: "btn btn-success" %>
         <%= link_to 'Sign Up', new_user_registration_path, class: "btn  btn-info" %>
