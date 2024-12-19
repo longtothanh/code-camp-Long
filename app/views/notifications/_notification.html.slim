@@ -1,0 +1,18 @@
+table.table.table-striped
+  thead
+    tr
+      th ID
+      th Email
+  tbody
+    - @notifications.each do |notification|
+      tr
+        td #{notification.action_type}
+        / td = link_to "#{user.email}", user_path(user)
+        / td
+        /   = link_to 'Edit', edit_user_registration_path(user), class: 'btn btn-warning'
+        / td
+        /   = button_to 'Delete', user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-md'
+        / - if current_user.following?(user)
+        /   td = button_to 'Unfollow', user_follow_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
+        / - else
+        /   td = button_to 'Follow', user_follow_path(user), method: :post, data: { confirm: 'Are you sure?' }, class: "btn btn-success"

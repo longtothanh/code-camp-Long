@@ -6,16 +6,18 @@ class BooksController < ApplicationController
 
   def destroy
     @book = Book.find(params[:id])
+    users = current_user.followers
     if @book.destroy
-      users = User.where.not(current_user.id)
-      users.each do |user|
-        Notification.create!(
-            user: current_user,
-            notifiable: user,
-            action_type: 'delete_book'
-          )
-        delete_book_notification = { user: current_user.email, action: 'delete_book' }
-        ActionCable.server.broadcast("user_#{current_user.id}_channel", delete_book_notification)
+      if users.present?
+        users.each do |user|
+          Notification.create!(
+              user: current_user,
+              notifiable: user,
+              action_type: 'delete_book'
+            )
+          delete_book_notification = { user: current_user.email, action: 'delete_book' }
+          ActionCable.server.broadcast("user_#{current_user.id}_channel", delete_book_notification)
+        end
       end
       redirect_to root_path, notice: 'Book deleted successfully'
     else
@@ -29,16 +31,18 @@ class BooksController < ApplicationController
 
   def create
     @book = Book.new(book_params)
-    users = User.where.not(id: current_user.id)
+    users = current_user.followers
     @book.save
-    users.each do |user|
-      Notification.create!(
-          user: current_user,
-          notifiable: user,
-          action_type: 'create_book'
-        )
-      create_book_notification = { user: current_user.email, action: 'create_book' }
-      ActionCable.server.broadcast("user_#{current_user.id}_channel", create_book_notification)
+    if users.present?
+      users.each do |user|
+        Notification.create!(
+            user: current_user,
+            notifiable: user,
+            action_type: 'create_book'
+          )
+        create_book_notification = { user: current_user.email, action: 'create_book' }
+        ActionCable.server.broadcast("user_#{current_user.id}_channel", create_book_notification)
+      end
     end
     redirect_to root_path, alert: 'Create book successfully'
   end
