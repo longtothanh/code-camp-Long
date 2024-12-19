@@ -1,12 +1,13 @@
 table.table.table-striped
   thead
     tr
-      th ID
-      th Email
+      th Notifications
+      th Time
   tbody
     - @notifications.each do |notification|
       tr
         td #{notification.action_type}
+        td #{notification.created_at.in_time_zone("Asia/Ho_Chi_Minh").to_formatted_s(:long)}
         / td = link_to "#{user.email}", user_path(user)
         / td
         /   = link_to 'Edit', edit_user_registration_path(user), class: 'btn btn-warning'

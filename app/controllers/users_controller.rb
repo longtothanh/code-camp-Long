@@ -3,6 +3,8 @@ class UsersController < ApplicationController
 
     def index
         @users = User.where.not(id: current_user.id)
+        @notifications = Notification.where(notifiable_id: current_user.id)
+        # binding.pry
     end
 
     def show

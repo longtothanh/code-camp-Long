@@ -13,9 +13,9 @@ class BooksController < ApplicationController
           Notification.create!(
               user: current_user,
               notifiable: user,
-              action_type: 'delete_book'
+              action_type: 'delete book'
             )
-          delete_book_notification = { user: current_user.email, action: 'delete_book' }
+          delete_book_notification = { user: current_user.email, action: 'delete book' }
           ActionCable.server.broadcast("user_#{current_user.id}_channel", delete_book_notification)
         end
       end
@@ -38,9 +38,9 @@ class BooksController < ApplicationController
         Notification.create!(
             user: current_user,
             notifiable: user,
-            action_type: 'create_book'
+            action_type: 'create book'
           )
-        create_book_notification = { user: current_user.email, action: 'create_book' }
+        create_book_notification = { user: current_user.email, action: 'create book' }
         ActionCable.server.broadcast("user_#{current_user.id}_channel", create_book_notification)
       end
     end
