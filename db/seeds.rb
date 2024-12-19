@@ -16,3 +16,9 @@ Book.create([
               { title: 'Moby-Dick', content: 'A story of Captain Ahab’s obsessive quest to kill the white whale.' },
               { title: 'The Great Gatsby', content: 'A novel that critiques the American Dream during the Jazz Age.' }
             ])
+
+User.create([
+  {email: "tothanhlong2002@gmail.com", password: "longvip5", password_confirmation: "longvip5"},
+  {email: "robinnhi125@gmail.com", password: "longvip5", password_confirmation: "longvip5"},
+  {email: "lt6883958@gmail.com", password: "longvip5", password_confirmation: "longvip5"}
+])

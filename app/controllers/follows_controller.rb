@@ -14,7 +14,7 @@ class FollowsController < ApplicationController
       )
 
       follow_notification = { user: current_user.email, action: 'follow' }
-      ActionCable.server.broadcast("user_#{@user.id}_channel", follow_notification)
+      ActionCable.server.broadcast("user_#{current_user.id}_channel", follow_notification)
 
       redirect_to users_path, alert: "You are now following #{@user.email}."
     else
@@ -35,7 +35,7 @@ class FollowsController < ApplicationController
       )
 
       unfollow_notification = { user: current_user.email, action: 'unfollow' }
-      ActionCable.server.broadcast("user_#{@user.id}_channel", unfollow_notification)
+      ActionCable.server.broadcast("user_#{current_user.id}_channel", unfollow_notification)
 
       redirect_to users_path, notice: "You have unfollowed #{@user.email} successfully."
     else
