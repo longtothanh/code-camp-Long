@@ -2,12 +2,23 @@
   .row.d-flex.justify-content-center
     .col-md-8
       h1.text-center= @book.title
-      p= @book.content
+      h2 Content: #{@book.content}
 
-      h2 Reviews
+      h3 Reviews
 
       #reviews data-book-id=@book.id
-        = render @book.reviews
+        .review
+          table.table.table-striped
+            thead
+              tr
+                th Content
+                th.time_table Created At
+            tbody
+              - @book.reviews.each do |review|
+                tr
+                  td = review.content
+                  td.time_table = review.created_at.in_time_zone("Asia/Ho_Chi_Minh").to_formatted_s(:long)
+        / = render @book.reviews
 
       h3 Write a Review
 

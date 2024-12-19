@@ -1,20 +1,13 @@
-table.table.table-striped
+table.table.table-striped style="width: 70%; margin: 0 auto;"
   thead
     tr
       th Notifications
-      th Time
+      th.time_table Time
   tbody
     - @notifications.each do |notification|
       tr
-        td #{notification[:email]}
-        td đã #{notification[:action_type]}
-        td #{notification[:created_at].in_time_zone("Asia/Ho_Chi_Minh").to_formatted_s(:long)}
-        / td = link_to "#{user.email}", user_path(user)
-        / td
-        /   = link_to 'Edit', edit_user_registration_path(user), class: 'btn btn-warning'
-        / td
-        /   = button_to 'Delete', user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-md'
-        / - if current_user.following?(user)
-        /   td = button_to 'Unfollow', user_follow_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
-        / - else
-        /   td = button_to 'Follow', user_follow_path(user), method: :post, data: { confirm: 'Are you sure?' }, class: "btn btn-success"
+        - if notification[:action_type] == "follow" || notification[:action_type] == "unfollow"
+          td #{notification[:email]} đã #{notification[:action_type]} bạn
+        - else
+          td #{notification[:email]} đã #{notification[:action_type]}
+        td.time_table #{notification[:created_at].in_time_zone("Asia/Ho_Chi_Minh").to_formatted_s(:long)}

@@ -1,3 +1,4 @@
-.review
-  p
-    = review.content
+/ tbody
+/   tr
+/     td = review.content
+/     td = review.created_at.in_time_zone("Asia/Ho_Chi_Minh").to_formatted_s(:long)
