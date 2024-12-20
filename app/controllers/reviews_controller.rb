@@ -12,11 +12,13 @@ class ReviewsController < ApplicationController
           Notification.create!(
             user: current_user,
             notifiable: user,
-            action_type: 'review'
+            action_type: "reviewed #{@book.title}"
           )
 
-          review_notification = { user: current_user.email, action: 'review' }
-          ActionCable.server.broadcast("user_#{user.id}_channel", review_notification)
+          time = Notification.order(created_at: :desc).find_by(user_id: current_user.id)
+
+          review_notification = { email: current_user.email, action_type: "reviewed #{@book.title}", created_at: time.created_at.in_time_zone("Asia/Ho_Chi_Minh").to_formatted_s(:long) }
+          UserNotificationChannel.broadcast_to(user, review_notification)
         end
       end
 

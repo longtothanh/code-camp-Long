@@ -6,19 +6,20 @@
 
       h3 Reviews
 
+      / #reviews data-book-id=@book.id
+      /   .review
+      /     table.table.table-striped
+      /       thead
+      /         tr
+      /           th Content
+      /           th.time_table Created At
+      /       tbody
+      /         - @book.reviews.each do |review|
+      /           tr
+      /             td = review.content
+      /             td.time_table = review.created_at.in_time_zone("Asia/Ho_Chi_Minh").to_formatted_s(:long)
       #reviews data-book-id=@book.id
-        .review
-          table.table.table-striped
-            thead
-              tr
-                th Content
-                th.time_table Created At
-            tbody
-              - @book.reviews.each do |review|
-                tr
-                  td = review.content
-                  td.time_table = review.created_at.in_time_zone("Asia/Ho_Chi_Minh").to_formatted_s(:long)
-        / = render @book.reviews
+        = render @book.reviews
 
       h3 Write a Review
 

@@ -1,22 +1,27 @@
 class BooksController < ApplicationController
+  before_action :authenticate_user!
+
   def show
     @book = Book.find(params[:id]) # Tìm sách theo ID được truyền trong params
     @reviews = @book.reviews # Lấy tất cả reviews cho sách này
   end
 
   def destroy
+    @user = current_user.followers
     @book = Book.find(params[:id])
-    users = current_user.followers
     if @book.destroy
-      if users.present?
-        users.each do |user|
+      if @user.present?
+        @user.each do |user|
           Notification.create!(
               user: current_user,
               notifiable: user,
-              action_type: 'delete book'
+              action_type: "deleted #{@book.title}"
             )
-          delete_book_notification = { user: current_user.email, action: 'delete book' }
-          ActionCable.server.broadcast("user_#{current_user.id}_channel", delete_book_notification)
+
+          time = Notification.order(created_at: :desc).find_by(user_id: current_user.id)
+
+          delete_book_notification = { email: current_user.email, action_type: "deleted #{@book.title}", created_at: time.created_at.in_time_zone("Asia/Ho_Chi_Minh").to_formatted_s(:long) }
+          UserNotificationChannel.broadcast_to(user, delete_book_notification)
         end
       end
       redirect_to root_path, notice: 'Book deleted successfully'
@@ -30,20 +35,24 @@ class BooksController < ApplicationController
   end
 
   def create
+    @user = current_user.followers
     @book = Book.new(book_params)
-    users = current_user.followers
     @book.save
-    if users.present?
-      users.each do |user|
+    if @user.present?
+      @user.each do |user|
         Notification.create!(
             user: current_user,
             notifiable: user,
-            action_type: 'create book'
+            action_type: "created #{@book.title}"
           )
-        create_book_notification = { user: current_user.email, action: 'create book' }
-        ActionCable.server.broadcast("user_#{current_user.id}_channel", create_book_notification)
-      end
+
+          time = Notification.order(created_at: :desc).find_by(user_id: current_user.id)
+
+        create_book_notification = { email: current_user.email, action_type: "created #{@book.title}", created_at: time.created_at.in_time_zone("Asia/Ho_Chi_Minh").to_formatted_s(:long) }
+        UserNotificationChannel.broadcast_to(user, create_book_notification)
+        end
     end
+
     redirect_to root_path, alert: 'Create book successfully'
   end
 

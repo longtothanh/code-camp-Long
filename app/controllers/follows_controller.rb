@@ -13,8 +13,10 @@ class FollowsController < ApplicationController
         action_type: 'follow'
       )
 
-      follow_notification = { user: current_user.email, action: 'follow' }
-      ActionCable.server.broadcast("user_#{current_user.id}_channel", follow_notification)
+      time = Notification.order(created_at: :desc).find_by(user_id: current_user.id)
+
+      follow_notification = { email: current_user.email, action_type: 'follow', created_at: time.created_at.in_time_zone("Asia/Ho_Chi_Minh").to_formatted_s(:long) }
+      UserNotificationChannel.broadcast_to(@user, follow_notification)
 
       redirect_to users_path, alert: "You are now following #{@user.email}."
     else
@@ -34,8 +36,10 @@ class FollowsController < ApplicationController
         action_type: 'unfollow'
       )
 
-      unfollow_notification = { user: current_user.email, action: 'unfollow' }
-      ActionCable.server.broadcast("user_#{current_user.id}_channel", unfollow_notification)
+      time = Notification.order(created_at: :desc).find_by(user_id: current_user.id)
+
+      unfollow_notification = { email: current_user.email, action_type: 'unfollow', created_at: time.created_at.in_time_zone("Asia/Ho_Chi_Minh").to_formatted_s(:long) }
+      UserNotificationChannel.broadcast_to(@user, unfollow_notification)
 
       redirect_to users_path, notice: "You have unfollowed #{@user.email} successfully."
     else

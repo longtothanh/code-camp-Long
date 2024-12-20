@@ -33,7 +33,12 @@ $(document).ready(function() {
       url: $(this).attr("action"),
       type: "POST",
       data: $(this).serialize(),
-      dataType: "script" // Hoặc có thể là "json" tùy thuộc vào bạn
+      dataType: "script", // Hoặc có thể là "json" tùy thuộc vào bạn
+      success: function(response) {
+        // Xóa form và đặt focus vào input
+        $("#new_review")[0].reset();
+        $("#review_content").focus()
+      }
     });
   });
 });

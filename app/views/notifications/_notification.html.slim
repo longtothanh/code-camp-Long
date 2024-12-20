@@ -1,4 +1,4 @@
-table.table.table-striped style="width: 70%; margin: 0 auto;"
+table#notification_list.table.table-striped style="width: 70%; margin: 0 auto;"
   thead
     tr
       th Notifications
@@ -7,7 +7,7 @@ table.table.table-striped style="width: 70%; margin: 0 auto;"
     - @notifications.each do |notification|
       tr
         - if notification[:action_type] == "follow" || notification[:action_type] == "unfollow"
-          td #{notification[:email]} đã #{notification[:action_type]} bạn
+          td #{notification[:email]} has #{notification[:action_type]}ed you
         - else
-          td #{notification[:email]} đã #{notification[:action_type]}
+          td #{notification[:email]} has #{notification[:action_type]}.
         td.time_table #{notification[:created_at].in_time_zone("Asia/Ho_Chi_Minh").to_formatted_s(:long)}

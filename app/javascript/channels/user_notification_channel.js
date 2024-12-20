@@ -2,7 +2,7 @@ import consumer from "channels/consumer"
 
 consumer.subscriptions.create("UserNotificationChannel", {
   connected() {
-    // Called when the subscription is ready for use on the server
+    console.log("đã kết nối");
   },
 
   disconnected() {
@@ -10,6 +10,10 @@ consumer.subscriptions.create("UserNotificationChannel", {
   },
 
   received(data) {
-    alert(`${data.user} has ${data.action}ed you.`);
+    const notifications = $("#notification_list")
+    if (data.action_type == "follow" || data.action_type == "unfollow")
+      notifications.append(`<tr><td>${data.email} has ${data.action_type}ed you</td><td class="time_table">${data.created_at}</td></tr>`);
+    else
+      notifications.append(`<tr><td>${data.email} has ${data.action_type} book</td><td class="time_table">${data.created_at}</td></tr>`);
   }
 });
